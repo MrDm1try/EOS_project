@@ -13,14 +13,23 @@ app.use(cors())
 
 app.post('/heater', function (req, res){
   exec('/home/debian/EOS_project/set_heater.sh ' + req.body.data)
+    .then(
+      res.json('Success')
+    )
 })
 
 app.post('/lid', function (req, res){
   exec('/home/debian/EOS_project/set_lid.sh ' + req.body.data)
+    .then(
+      res.json('Success')
+    )
 })
 
 app.post('/setlight', function (req, res){
   exec('/home/debian/EOS_project/set_led.sh ' + req.body.data)
+    .then(
+      res.json('Success')
+    )
 })
 
 app.get('/humidity', function (req, res){
