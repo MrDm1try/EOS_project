@@ -12,25 +12,19 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors())
 
 app.post('/heater', function (req, res){
-  console.log(req.body) // bodyparser data in req.body
-
-  res.json('Heater: ' + req.body.data)
+  exec('/home/debian/EOS_project/set_heater.sh ' + req.body.data)
 })
 
 app.post('/lid', function (req, res){
-  console.log(req.body) // bodyparser data in req.body
-
-  res.json('Lid: ' + req.body.data)
+  exec('/home/debian/EOS_project/set_lid.sh ' + req.body.data)
 })
 
 app.post('/setlight', function (req, res){
-  console.log(req.body) // bodyparser data in req.body
-
-  res.json('Light: ' + req.body.data)
+  exec('/home/debian/EOS_project/set_led.sh ' + req.body.data)
 })
 
 app.get('/humidity', function (req, res){
-  exec('C:\\cygwin64\\bin\\bash script.sh')
+  exec('/home/debian/EOS_project/hih8120.bin hum')
     .then(data => {
       res.json({
         stdout: data.stdout
@@ -39,7 +33,7 @@ app.get('/humidity', function (req, res){
 })
 
 app.get('/temperature', function (req, res){
-  exec('C:\\cygwin64\\bin\\bash script.sh')
+  exec('/home/debian/EOS_project/hih8120.bin temp')
     .then(data => {
       res.json({
         stdout: data.stdout
@@ -48,7 +42,7 @@ app.get('/temperature', function (req, res){
 })
 
 app.get('/light', function(req, res){
-  exec('C:\\cygwin64\\bin\\bash script.sh')
+  exec('/home/debian/EOS_project/get_light_intensity.sh')
     .then(data => {
       res.json({
         stdout: data.stdout
