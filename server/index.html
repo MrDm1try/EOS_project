@@ -208,18 +208,18 @@
     xmlHttp.send(params);
   }
 
-  httpGetAsync('http://localhost:3000/humidity', function (data) {
+  httpGetAsync('http://localhost:8000/humidity', function (data) {
     console.log(data);
     var humidity = JSON.parse(data);
     hum.innerHTML = humidity.stdout;
   })
 
-  httpGetAsync('http://localhost:3000/temperature', function (data) {
+  httpGetAsync('http://localhost:8000/temperature', function (data) {
     var temperature = JSON.parse(data);
     temp.innerHTML = temperature.stdout;
   })
 
-  httpGetAsync('http://localhost:3000/light', function (data) {
+  httpGetAsync('http://localhost:8000/light', function (data) {
     var lightu = JSON.parse(data);
     light.innerHTML = lightu.stdout;
   })
@@ -232,7 +232,7 @@
   }
   heatOn.onclick = function() {
     heaterSwitch = "1";
-    httpPostAsync('http://localhost:3000/heater', heaterSwitch, function (data) {
+    httpPostAsync('http://localhost:8000/heater', heaterSwitch, function (data) {
       console.log(data)
     })
     heater.innerHTML = "ON";
@@ -240,7 +240,7 @@
   }
   heatOff.onclick = function() {
     heaterSwitch = "0"
-    httpPostAsync('http://localhost:3000/heater', heaterSwitch, function (data) {
+    httpPostAsync('http://localhost:8000/heater', heaterSwitch, function (data) {
       console.log(data)
     })
     heater.innerHTML = "OFF";
@@ -248,7 +248,7 @@
   }
   open.onclick = function() {
     lidSwitch = "1"
-    httpPostAsync('http://localhost:3000/lid', lidSwitch, function (data) {
+    httpPostAsync('http://localhost:8000/lid', lidSwitch, function (data) {
       console.log(data)
     })
     lid.innerHTML = "OPEN";
@@ -256,7 +256,7 @@
   }
   close.onclick = function() {
     lidSwitch = "0"
-    httpPostAsync('http://localhost:3000/lid', lidSwitch, function (data) {
+    httpPostAsync('http://localhost:8000/lid', lidSwitch, function (data) {
       console.log(data)
     })
     lid.innerHTML = "CLOSED";
@@ -264,7 +264,7 @@
   }
 
   setLight.onclick = function() {
-    httpPostAsync('http://localhost:3000/setlight', slideValue, function (data) {
+    httpPostAsync('http://localhost:8000/setlight', slideValue, function (data) {
       console.log(data)
     })
   }
