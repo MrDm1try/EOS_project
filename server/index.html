@@ -1,0 +1,274 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <style>
+    body {
+      margin-top: 30px
+    }
+
+    h1 {
+      color: grey
+    }
+
+    .cont {
+      background-color: #f8f8f8;
+      border-radius: 10px;
+      margin: 20px;
+      padding-bottom: 20px;
+      width: 400px;
+    }
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    li {
+      float: left;
+    }
+
+    li {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    .data {
+      display: block;
+      padding: 14px 14px;
+      padding-left: 0;
+    }
+
+    li a:hover {
+      background-color: #111;
+      text-decoration: none;
+      color: white;
+    }
+
+    li p {
+      color: white;
+      font-size: 18px;
+    }
+
+    .data {
+      margin-right: 10px;
+    }
+
+    .heat {
+      margin: 20px;
+      float: left;
+      text-align: center;
+    }
+
+    .lid {
+      margin: 20px;
+      float: right;
+      text-align: center;
+    }
+
+    img {
+      width: 35px;
+    }
+
+    .controls {
+      padding-right: 40px;
+      padding-left: 40px;
+    }
+
+    .status {
+      padding-bottom: 10px;
+      padding-top: 10px;
+      background-color: #393939;
+      color: white;
+      text-align: center;
+      border-radius: 5px;
+    }
+
+    .mode {
+      width: 60%;
+      margin: auto;
+    }
+
+    .mode h3 {
+      text-align: center;
+    }
+
+    .mode button {
+      display: inline-block;
+      margin: auto;
+    }
+
+    .buttons {
+      margin-left: 20px;
+    }
+  </style>
+
+  <title> Temperature and Humidity</title>
+</head>
+
+<body>
+  <div class="cont">
+    <ul>
+      <li><img src="humidity.svg"></li>
+      <li class="data">
+        <p id="humRead">50%</p>
+      </li>
+      <li><img src="temperature.svg"></li>
+      <li class="data">
+        <p id="tempRead">19 °C</p>
+      </li>
+      <li><img src="sun.svg"></li>
+      <li class="data">
+        <p id="lightRead">74%</p>
+      </li>
+    </ul>
+
+    <div class="controls mode">
+      <h3>Control Mode</h3>
+      <p class="status" id="control">Manual</p>
+      <div class="buttons">
+        <button id="manual" onclick="document.getElementById('control').innerHTML='MANUAL'">Manual</button>
+        <button id="auto" onclick="document.getElementById('control').innerHTML='AUTO'">Auto</button>
+      </div>
+    </div>
+
+    <div class="row controls">
+      <div class="heat">
+        <h3>Heater</h3>
+        <p class="status" id="heat">off</p>
+        <button id="on">On</button>
+        <button id="off">Off</button>
+
+      </div>
+
+      <div class="lid">
+        <h3>Lid</h3>
+        <p class="status" id="lid">closed</p>
+        <button id="open" onclick="document.getElementById('lid').innerHTML='OPEN'">Open</button>
+        <button id="close" onclick="document.getElementById('lid').innerHTML='CLOSED'">Close</button>
+
+      </div>
+    </div>
+    <div class="controls">
+      <h3>Light Intensity %</h3>
+      <h4 id="value"></h4>
+      <input type="range" min="1" max="100" value="50" id="slide">
+      <button id="setLight">SET</button>
+    </div>
+  </div>
+</body>
+<script>
+  var slider = document.getElementById("slide");
+  var output = document.getElementById("value");
+  var lid = document.getElementById("lid");
+  var heater = document.getElementById("heat");
+  var controller = document.getElementById("control");
+  var heatOn = document.getElementById("on");
+  var heatOff = document.getElementById("off");
+  var open = document.getElementById("open");
+  var close = document.getElementById("close");
+  var hum = document.getElementById("humRead");
+  var temp = document.getElementById("tempRead");
+  var light = document.getElementById("lightRead");
+  var setLight = document.getElementById("setLight");
+
+  var slideValue = ''
+
+  var heaterSwitch = ''
+  var lidSwitch = ''
+
+  function httpGetAsync(theUrl, callback) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+      if (xmlHttp.readyState == 4 && xmlHttp.status == 200);
+        callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous
+    xmlHttp.send(null);
+  }
+
+  function httpPostAsync(theUrl, data, callback) {
+    var xmlHttp = new XMLHttpRequest();
+
+    var params = "data=" + data
+
+    xmlHttp.onreadystatechange = function() {
+      if (xmlHttp.readyState == 4 && xmlHttp.status == 200);
+        callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("POST", theUrl, true); // true for asynchronous
+    xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlHttp.send(params);
+  }
+
+  httpGetAsync('http://localhost:3000/humidity', function (data) {
+    console.log(data);
+    var humidity = JSON.parse(data);
+    hum.innerHTML = humidity.stdout;
+  })
+
+  httpGetAsync('http://localhost:3000/temperature', function (data) {
+    var temperature = JSON.parse(data);
+    temp.innerHTML = temperature.stdout;
+  })
+
+  httpGetAsync('http://localhost:3000/light', function (data) {
+    var lightu = JSON.parse(data);
+    light.innerHTML = lightu.stdout;
+  })
+
+  output.innerHTML = slider.value;
+
+  slider.oninput = function() {
+    output.innerHTML = this.value;
+    slideValue = this.value;
+  }
+  heatOn.onclick = function() {
+    heaterSwitch = "1";
+    httpPostAsync('http://localhost:3000/heater', heaterSwitch, function (data) {
+      console.log(data)
+    })
+    heater.innerHTML = "ON";
+    heater.style.backgroundColor = "#ff7474";
+  }
+  heatOff.onclick = function() {
+    heaterSwitch = "0"
+    httpPostAsync('http://localhost:3000/heater', heaterSwitch, function (data) {
+      console.log(data)
+    })
+    heater.innerHTML = "OFF";
+    heater.style.backgroundColor = "#638dff";
+  }
+  open.onclick = function() {
+    lidSwitch = "1"
+    httpPostAsync('http://localhost:3000/lid', lidSwitch, function (data) {
+      console.log(data)
+    })
+    lid.innerHTML = "OPEN";
+    lid.style.backgroundColor = "#638dff";
+  }
+  close.onclick = function() {
+    lidSwitch = "0"
+    httpPostAsync('http://localhost:3000/lid', lidSwitch, function (data) {
+      console.log(data)
+    })
+    lid.innerHTML = "CLOSED";
+    lid.style.backgroundColor = "#ffe763";
+  }
+
+  setLight.onclick = function() {
+    httpPostAsync('http://localhost:3000/setlight', slideValue, function (data) {
+      console.log(data)
+    })
+  }
+
+</script>
+
+</html>

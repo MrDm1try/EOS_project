@@ -1,0 +1,70 @@
+var express = require('express')
+var app = express()
+var path = require('path')
+var util = require('util')
+var cors = require('cors')
+var bodyParser = require('body-parser')
+var exec =  util.promisify(require('child_process').exec)
+
+app.use(express.static(__dirname + '/images'))
+
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(cors())
+
+app.post('/heater', function (req, res){
+  console.log(req.body) // bodyparser data in req.body
+
+  res.json('Heater: ' + req.body.data)
+})
+
+app.post('/lid', function (req, res){
+  console.log(req.body) // bodyparser data in req.body
+
+  res.json('Lid: ' + req.body.data)
+})
+
+app.post('/setlight', function (req, res){
+  console.log(req.body) // bodyparser data in req.body
+
+  res.json('Light: ' + req.body.data)
+})
+
+app.get('/humidity', function (req, res){
+  exec('C:\\cygwin64\\bin\\bash script.sh')
+    .then(data => {
+      res.json({
+        stdout: data.stdout
+      })
+    })
+})
+
+app.get('/temperature', function (req, res){
+  exec('C:\\cygwin64\\bin\\bash script.sh')
+    .then(data => {
+      res.json({
+        stdout: data.stdout
+      })
+    })
+})
+
+app.get('/light', function(req, res){
+  exec('C:\\cygwin64\\bin\\bash script.sh')
+    .then(data => {
+      res.json({
+        stdout: data.stdout
+      })
+    })
+})
+
+app.put('/sendTemp', function (req, res) {
+
+
+  res.json('Success')
+})
+
+app.get('/', function(req, res){
+  res.sendFile(path.join(__dirname+'/index.html'))
+})
+
+app.listen(3000)
+console.log('API running on port 3000')
