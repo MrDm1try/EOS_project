@@ -178,13 +178,9 @@
   var temp = document.getElementById("tempRead");
   var light = document.getElementById("lightRead");
   var setLight = document.getElementById("setLight");
-
-  var slideValue = 50
-
+  var slideValue = ''
   var heaterSwitch = ''
   var lidSwitch = ''
-
-
 
   function httpGetAsync(theUrl, callback) {
     var xmlHttp = new XMLHttpRequest();
@@ -198,7 +194,6 @@
 
   function httpPostAsync(theUrl, data, callback) {
     var xmlHttp = new XMLHttpRequest();
-
     var params = "data=" + data
 
     xmlHttp.onreadystatechange = function() {
@@ -288,7 +283,7 @@
        lid.innerHTML = "OPEN"
        lid.style.backgroundColor = "#638dff";
      }
-
+     
     })
     httpGetAsync('http://' + window.location.host + '/led', function (data) {
      theledStatus = JSON.parse(data)
