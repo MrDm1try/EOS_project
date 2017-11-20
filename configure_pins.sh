@@ -34,6 +34,8 @@ echo 0 > ${DUTY_CYCLE_LED}
 echo 1800000 > ${DUTY_CYCLE_LID}
 echo 1 > ${ENABLE_LED}
 echo 1 > ${ENABLE_LID}
+sleep 1
+echo 0 > ${ENABLE_LID}
 
 echo ${GPIO_PIN} > ${GPIO_EXPORT}
 echo low > ${GPIO_DIRECTION}
