@@ -294,6 +294,7 @@
      theledStatus = JSON.parse(data)
      ledStatus = theledStatus.stdout
      output.innerHTML = ledStatus
+     slider.value = ledStatus
     })
     httpGetAsync('http://' + window.location.host + '/heater', function (data) {
      theheatStatus = JSON.parse(data)
@@ -305,7 +306,6 @@
        heater.innerHTML = "OFF";
        heater.style.backgroundColor = "#638dff";
      }
-     heater.innerHTML = heatStatus
     })
   }, false)
 
