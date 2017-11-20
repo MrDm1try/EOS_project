@@ -279,7 +279,8 @@
     var heatStatus = 'Loading'
 
     httpGetAsync('http://' + window.location.host + '/lid', function (data) {
-     lidStatus = JSON.parse(data);
+     thelidStatus = JSON.parse(data)
+     lidStatus = thelidStatus.stdout
      alert(lidStatus)
     })
     httpGetAsync('http://' + window.location.host + '/led', function (data) {
