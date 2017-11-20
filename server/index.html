@@ -281,19 +281,32 @@
     httpGetAsync('http://' + window.location.host + '/lid', function (data) {
      thelidStatus = JSON.parse(data)
      lidStatus = thelidStatus.stdout
-     lid.innerHTML = lidStatus
+     if(lidStatus == 0){
+       lid.innerHTML = "CLOSED"
+       lid.style.backgroundColor = "#ffe763"
+     } else {
+       lid.innerHTML = "OPEN"
+       lid.style.backgroundColor = "#638dff";
+     }
+
     })
     httpGetAsync('http://' + window.location.host + '/led', function (data) {
-     ledStatus = JSON.parse(data)
+     theledStatus = JSON.parse(data)
+     ledStatus = theledStatus.stdout
      output.innerHTML = ledStatus
     })
     httpGetAsync('http://' + window.location.host + '/heater', function (data) {
-     heatStatus = JSON.parse(data)
+     theheatStatus = JSON.parse(data)
+     heatStatus = theheatStatus.stdout
+     if (heatStatus == 1) {
+       heater.innerHTML = "ON";
+       heater.style.backgroundColor = "#ff7474";
+     } else {
+       heater.innerHTML = "OFF";
+       heater.style.backgroundColor = "#638dff";
+     }
      heater.innerHTML = heatStatus
     })
-
-
-
   }, false)
 
 </script>
