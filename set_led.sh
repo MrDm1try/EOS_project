@@ -3,7 +3,7 @@ set -eu
 
 help () {
     echo ""
-    echo "USAGE: set_lid.sh INTENSITY"
+    echo "USAGE: set_led.sh INTENSITY"
     echo ""
     echo "INTENSITY: percentage, should be in range 0..100"
     echo ""

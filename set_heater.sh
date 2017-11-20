@@ -11,7 +11,7 @@ help () {
     echo ""
 }
 
-GPIO_DIRECTION="/sys/class/gpio/gpio60/direction"
+GPIO_VALUE="/sys/class/gpio/gpio60/value"
 
 if [ $# -eq 0 ];
 then
@@ -21,10 +21,10 @@ fi
 
 if [ $1 -eq 0 ];
 then
-	echo low > ${GPIO_DIRECTION}
+	echo 0 > ${GPIO_VALUE}
 elif [ $1 -eq 1 ];
 then
-	echo high > ${GPIO_DIRECTION}
+	echo 1 > ${GPIO_VALUE}
 else
 	help
 	exit 1
