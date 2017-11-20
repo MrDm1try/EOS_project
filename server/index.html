@@ -272,12 +272,25 @@
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    var lidStatus = ''
+    //lid - lid value
+    var lidStatus = 'Loading'
+    // output - LED value
+    var ledStatus = 'Loading'
+    //heater - heat value
+    var heatStatus = 'Loading'
+
     httpGetAsync('http://' + window.location.host + '/lid', function (data) {
      lidStatus = JSON.parse(data);
     })
-    alert(lidStatus)
+    httpGetAsync('http://' + window.location.host + '/led', function (data) {
+     ledStatus = JSON.parse(data);
+    })
+    httpGetAsync('http://' + window.location.host + '/heater', function (data) {
+     heatStatus = JSON.parse(data);
+    })
     lid.innerHTML = lidStatus
+    output.innerHTML = ledStatus
+    heater.innerHTML = heatStatus
 
   }, false)
 
