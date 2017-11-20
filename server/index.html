@@ -217,20 +217,19 @@
   })
 
   httpGetAsync('http://' + window.location.host + '/temperature', function (data) {
-    var temperature = JSON.parse(data);
-    temp.innerHTML = temperature.stdout;
+    var temperature = JSON.parse(data)
+    temp.innerHTML = temperature.stdout
   })
 
   httpGetAsync('http://' + window.location.host + '/light', function (data) {
-    var lightu = JSON.parse(data);
-    light.innerHTML = lightu.stdout;
+    var lightu = JSON.parse(data)
+    light.innerHTML = lightu.stdout
   })
-
-  output.innerHTML = slider.value;
+  output.innerHTML = slider.value
 
   slider.oninput = function() {
-    output.innerHTML = this.value;
-    slideValue = this.value;
+    output.innerHTML = this.value
+    slideValue = this.value
   }
   heatOn.onclick = function() {
     heaterSwitch = "1";
@@ -281,6 +280,7 @@
 
     httpGetAsync('http://' + window.location.host + '/lid', function (data) {
      lidStatus = JSON.parse(data);
+     alert(lidStatus)
     })
     httpGetAsync('http://' + window.location.host + '/led', function (data) {
      ledStatus = JSON.parse(data);
