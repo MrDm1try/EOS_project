@@ -184,6 +184,8 @@
   var heaterSwitch = ''
   var lidSwitch = ''
 
+
+
   function httpGetAsync(theUrl, callback) {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() {
@@ -268,6 +270,16 @@
       console.log(data)
     })
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var lidStatus = ''
+    httpGetAsync('http://' + window.location.host + '/lid', function (data) {
+     lidStatus = JSON.parse(data);
+    })
+    alert(lidStatus)
+    lid.innerHTML = lidStatus
+
+  }, false)
 
 </script>
 
