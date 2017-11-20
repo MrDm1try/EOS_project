@@ -17,7 +17,7 @@
       border-radius: 10px;
       margin: 20px;
       padding-bottom: 20px;
-      width: 400px;
+      width: 420px;
     }
 
     ul {
@@ -208,18 +208,18 @@
     xmlHttp.send(params);
   }
 
-  httpGetAsync('http://192.168.87.116:8000/humidity', function (data) {
+  httpGetAsync('http://' + window.location.host + '/humidity', function (data) {
     console.log(data);
     var humidity = JSON.parse(data);
     hum.innerHTML = Math.round(humidity.stdout);
   })
 
-  httpGetAsync('http://192.168.87.116:8000/temperature', function (data) {
+  httpGetAsync('http://' + window.location.host + '/temperature', function (data) {
     var temperature = JSON.parse(data);
     temp.innerHTML = temperature.stdout;
   })
 
-  httpGetAsync('http://192.168.87.116:8000/light', function (data) {
+  httpGetAsync('http://' + window.location.host + '/light', function (data) {
     var lightu = JSON.parse(data);
     light.innerHTML = lightu.stdout;
   })
@@ -232,15 +232,15 @@
   }
   heatOn.onclick = function() {
     heaterSwitch = "1";
-    httpPostAsync('http://192.168.87.116:8000/heater', heaterSwitch, function (data) {
-      console.log(data)
+    httpPostAsync('http://' + window.location.host + '/heater', heaterSwitch, function (data) {
+      console.log(window.location.host)
     })
     heater.innerHTML = "ON";
     heater.style.backgroundColor = "#ff7474";
   }
   heatOff.onclick = function() {
     heaterSwitch = "0"
-    httpPostAsync('http://192.168.87.116:8000/heater', heaterSwitch, function (data) {
+    httpPostAsync('http://' + window.location.host + '/heater', heaterSwitch, function (data) {
       console.log(data)
     })
     heater.innerHTML = "OFF";
@@ -248,7 +248,7 @@
   }
   open.onclick = function() {
     lidSwitch = "100"
-    httpPostAsync('http://192.168.87.116:8000/lid', lidSwitch, function (data) {
+    httpPostAsync('http://' + window.location.host + '/lid', lidSwitch, function (data) {
       console.log(data)
     })
     lid.innerHTML = "OPEN";
@@ -256,7 +256,7 @@
   }
   close.onclick = function() {
     lidSwitch = "0"
-    httpPostAsync('http://192.168.87.116:8000/lid', lidSwitch, function (data) {
+    httpPostAsync('http://' + window.location.host + '/lid', lidSwitch, function (data) {
       console.log(data)
     })
     lid.innerHTML = "CLOSED";
@@ -264,7 +264,7 @@
   }
 
   setLight.onclick = function() {
-    httpPostAsync('http://192.168.87.116:8000/setlight', slideValue, function (data) {
+    httpPostAsync('http://' + window.location.host + '/setlight', slideValue, function (data) {
       console.log(data)
     })
   }
