@@ -59,6 +59,33 @@ app.get('/light', function(req, res){
     })
 })
 
+app.get('/lid', function(req, res){
+  exec('/home/debian/EOS_project/get_lid.sh')
+    .then(data => {
+      res.json({
+        stdout: data.stdout
+      })
+    })
+})
+
+app.get('/led', function(req, res){
+  exec('/home/debian/EOS_project/get_led.sh')
+    .then(data => {
+      res.json({
+        stdout: data.stdout
+      })
+    })
+})
+
+app.get('/heater', function(req, res){
+  exec('/home/debian/EOS_project/get_heater.sh')
+    .then(data => {
+      res.json({
+        stdout: data.stdout
+      })
+    })
+})
+
 app.put('/sendTemp', function (req, res) {
 
 
