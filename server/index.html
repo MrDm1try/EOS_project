@@ -281,17 +281,18 @@
     httpGetAsync('http://' + window.location.host + '/lid', function (data) {
      thelidStatus = JSON.parse(data)
      lidStatus = thelidStatus.stdout
-     alert(lidStatus)
+     lid.innerHTML = lidStatus
     })
     httpGetAsync('http://' + window.location.host + '/led', function (data) {
-     ledStatus = JSON.parse(data);
+     ledStatus = JSON.parse(data)
+     output.innerHTML = ledStatus
     })
     httpGetAsync('http://' + window.location.host + '/heater', function (data) {
-     heatStatus = JSON.parse(data);
+     heatStatus = JSON.parse(data)
+     heater.innerHTML = heatStatus
     })
-    lid.innerHTML = lidStatus
-    output.innerHTML = ledStatus
-    heater.innerHTML = heatStatus
+
+
 
   }, false)
 
