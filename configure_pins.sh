@@ -38,6 +38,6 @@ sleep 1
 echo 0 > ${ENABLE_LID}
 
 echo ${GPIO_PIN} > ${GPIO_EXPORT}
-echo low > ${GPIO_DIRECTION}
+echo out > ${GPIO_DIRECTION}
 
 exit 0
