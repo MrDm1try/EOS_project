@@ -23,7 +23,7 @@ float* HIH8120::getData(){
     //Wait for the measurement cycle - typically 36.65 ms
     usleep(40000);
     // Fetch data
-    unsigned char* data = i2c_sensor->readDevice(0x27);
+    unsigned char* data = i2c_sensor->readDevice(4);
 
     // Check the bit for stale data - if it is set, output the warning
     if (data[0] & (1<<6)) {
