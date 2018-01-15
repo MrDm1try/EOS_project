@@ -9,6 +9,7 @@
  * @param device The device ID on the bus.
  */
 HIH8120::HIH8120(unsigned int bus, unsigned int device) {
+    // creating pointer to a new object
     i2c_sensor = new I2CDevice(bus, device);
 }
 
@@ -24,12 +25,17 @@ float* HIH8120::getData(){
     // Fetch data
     unsigned char* data = i2c_sensor->readDevice(0x27);
 
+    // Check the bit for stale data - if it is set, output the warning
     if (data[0] & (1<<6)) {
         std::cout << "WARNING: stale data" << std::endl;
     }
+    // Compute first value - bit shifting and masking
     unsigned short raw_hum = ((data[0] << 8) | data[1]) & 0x3fff;
+    // Compute secoond value - bit shifting
     unsigned short raw_temp = (data[2] << 6) | (data[3] >> 2);
+    // Declare an float array of length 2
     float* toReturn = new float[2];
+    // Calculate real values, put into the array and return
     toReturn[0] = raw_hum * (100.0/((1<<14) - 2));
     toReturn[1] = raw_temp * (165.0/((1<<14) - 2)) - 40;
     return toReturn;
